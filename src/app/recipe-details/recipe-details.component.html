@@ -1,0 +1,23 @@
+<div class="card">
+    <img src="{{ recipe.image }}" class="card-img-top" />
+    <div class="card-body">
+      <h3 class="pb-1 ps-2" style="background-color: grey; color: white">
+        {{ recipe.title }}
+      </h3>
+      <div class="ps-2">
+        <h5>Diet Type:</h5>
+        <p class="card-text">{{ recipe.diet }}</p>
+        <h5>Ingredients:</h5>
+        <ul>
+          <li *ngFor="let ingredient of recipe.ingredients">
+            {{ ingredient["name"] }} ({{ ingredient["amount"] }})
+          </li>
+        </ul>
+        <h5>Instructions:</h5>
+        <p class="card-text">{{ recipe.instructions }}</p>
+        <h5>Cooking Time:</h5>
+        <p class="card-text">{{ recipe.cookTime }}</p>
+      </div>
+    </div>
+  </div>
+  

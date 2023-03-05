@@ -1,0 +1,35 @@
+<div class="alignfull">
+
+    <app-recipe-form *ngIf="showRecipeForm" (newRecipeEvent)="addRecipe($any($event))"
+    (recipeFormClose)="closeForm($event)" [recipe]="currentRecipe"></app-recipe-form>
+
+    <div *ngIf="!showRecipeForm" id="sticky" class="d-flex flex-row pt-2 pb-2" style="background-color: lightblue;">
+        <button (click)="openAddRecipe()" *ngIf="isAuthenticated$ | async" 
+        class="btn btn-primary me-3 ms-4">Add Recipe</button>
+
+        <button (click)="openEditRecipe()" *ngIf="isAuthenticated$ | async" [disabled]="!currentRecipe"
+        class="btn btn-secondary me-3">Edit Recipe</button>
+
+        <button (click)="deleteRecipe()" *ngIf="isAuthenticated$ | async" [disabled]="!currentRecipe"
+        class="btn btn-danger me-3">Delete Recipe</button>
+
+        <select *ngIf="!showRecipeForm" class="col form-select ms-4 me-4 mt-1" [(ngModel)]="diet" (ngModelChange)="onDietChange()">
+            <option value="" disabled selected>Filter By Diet Type</option>
+            <option value="any">All</option>
+            <option value="vegan">Vegan</option>
+            <option value="vegetarian">Vegetarian</option>
+        </select>
+    </div>
+    
+    <div class="row ms-2 me-2">
+        <div class="col-4" *ngIf="!showRecipeForm">
+            <app-recipe-row class="card mt-2" *ngFor="let r of recipeList" [recipe]="r" (click)='clicked(r)'
+            [class.bg-primary]="isSelected(r)" [class.text-white]="isSelected(r)"></app-recipe-row>
+        </div>
+    
+        <app-recipe-details id="sticky2" class="col-8 d-flex mt-2" *ngIf="currentRecipe" [recipe]="currentRecipe"></app-recipe-details>
+    </div>
+
+    <div id="alert" *ngIf="message" class="alert alert-warning" role="alert">{{message}}</div>
+    
+</div>

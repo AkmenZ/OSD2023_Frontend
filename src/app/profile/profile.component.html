@@ -1,0 +1,18 @@
+<div id="profile" class="container-fluid" *ngIf="user$ | async as user">
+  
+    <h2 style="background-color: lightblue;">Profile Information</h2>
+  
+    <div class="row">
+      <img class="col-5" src="{{user.picture}}" alt="" style="height: 15%; width: 15%">
+      <div class="col-auto" style="background-color: white;">
+        <h3>{{user.name}}</h3>
+        <h5>nickname - {{user.nickname}}</h5>
+        <h5>email - {{user.email}}</h5>
+        <h5>verified - {{user.email_verified}}</h5>
+        <!--<h5>picture - {{user.picture}}</h5>-->
+      </div>
+    </div>
+  
+  </div>
+  
+  

@@ -1,0 +1,23 @@
+.alignfull {
+    position: absolute;
+    top: 130px;
+    width: 100%;
+}
+
+#sticky {
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+}
+
+#sticky2 {
+    position: fixed;
+    left: 33%;
+    top: 184px;
+}
+
+#alert {
+    position: fixed; 
+    bottom:0%;
+    width:100%;
+}
