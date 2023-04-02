@@ -2,14 +2,14 @@
     <h2>Enter Recipe Data</h2>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
 
-    <form [formGroup]="recipeForm" (ngSubmit)="submit()" class="form-group" class="container-md">
+    <form [formGroup]="recipeForm" (ngSubmit)="submit()" class="form-group" class="container-md" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title">Title</label>
             <input id="title" type="text" formControlName="title" class="form-control">
         </div>
         <div class="mb-3">
-            <label for="imageUrl">ImageUrl</label>
-            <input id="imageUrl" type="text" formControlName="image" class="form-control">
+            <label for="image">Image</label>
+            <input id="image" type="file" class="form-control" (change)="onImageSelected($event)">
         </div>
         <div class="mb-3">
             <label for="diet">Diet Type</label>
@@ -25,14 +25,14 @@
 
                 <div [formGroupName]="i">
                     <h4>Ingredient {{i+1}}</h4>
-                    <button class="btn btn-danger mb-2" (click)="removeRow(i)">Remove</button>
+                    <button mat-raised-button color="warn" (click)="removeRow(i)"><mat-icon>remove_circle</mat-icon> Remove</button>
                     <input id="name" type="text" placeholder="Name" formControlName="name" class="form-control">
                     <input id="amount" type="text" placeholder="Amount" formControlName="amount" class="form-control">
                 </div>
                 
             </div>
 
-            <a class="btn btn-primary mb-2 mt-2" (click)="addNewRow()">Add New Ingredient (+)</a>
+            <a mat-raised-button color="primary" (click)="addNewRow()"><mat-icon>add_circle</mat-icon> Add New Ingredient</a>
         </div>
         <div class="mb-3">
             <label for="instructions">Instructions</label>
@@ -42,7 +42,7 @@
             <label for="cookTime">Cooking Time</label>
             <input id="cookTime" type="text" formControlName="cookTime" class="form-control">
         </div>
-        <button class="btn btn-secondary" type="submit" [disabled]="!recipeForm.valid">Submit</button>
+        <button mat-raised-button color="link" type="submit" [disabled]="!recipeForm.valid">Submit</button>
 
         <div *ngIf="instructions?.invalid && instructions?.touched" class="alert alert-danger">
             Instructions are required and must be at least 5 letters

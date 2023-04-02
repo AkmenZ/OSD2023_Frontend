@@ -10,10 +10,13 @@ import { map } from 'rxjs/internal/operators/map';
 export class ProfileComponent implements OnInit {
 
   user$ = this.auth.user$;
-  code$ = this.user$.pipe(map((user) => JSON.stringify(user, null)));
+  code$ = this.user$.pipe(
+    map((user) => JSON.stringify(user, null))
+    );
 
   constructor(public auth: AuthService) { }
 
   ngOnInit(): void {
   }
+
 }

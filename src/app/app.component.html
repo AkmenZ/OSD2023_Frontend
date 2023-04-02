@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-sm" style="background-color: lightblue;">
+<nav class="navbar navbar-expand-sm" style="background-color: rgb(168, 143, 218)"><img class="logo" src="https://i.postimg.cc/nLQ24Gnh/recipes-logo-1.png" style="width: 120px;">
   <div class="container-fluid">
-  <img class="logo" src="https://uxwing.com/wp-content/themes/uxwing/download/food-and-drinks/meal-food-icon.png" style="width: 30px;">
+  
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="mynavbar">
+    <div class="collapse navbar-collapse" id="mynavbar" style="margin-left: 100px;">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
           <a class="nav-link ms-2" routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">Home</a>
@@ -15,15 +15,18 @@
         <li class="nav-item">
           <a class="nav-link ms-2"  *ngIf="isAuthenticated$ | async" routerLink="/profile" routerLinkActive="active">Profile</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link ms-2"  *ngIf="isAdmin" routerLink="/profile" routerLinkActive="active">Flagged List</a>
+        </li>
       </ul>
     </div>
 
       <div class="d-flex">
-        <button type="button" *ngIf="!(isAuthenticated$ | async)" class="btn btn-primary col-6 px-3 me-2" 
-        (click)=handleLogin()>
+        <button type="button" *ngIf="!(isAuthenticated$ | async)" mat-raised-button color="primary" 
+        (click)="handleLogin()">
             Login
         </button>
-        <button type="button" *ngIf="!(isAuthenticated$ | async)" class="btn btn-secondary col-6 px-3 me-2" 
+        <button type="button" *ngIf="!(isAuthenticated$ | async)" mat-raised-button color="link" 
         (click)=handleSignUp()>
             SignUp
         </button>
@@ -32,7 +35,7 @@
           <img src="{{user.picture}}" style="width: 50px; margin-right: 20px; border-radius: 50%;"/>
         </div>
         <button *ngIf="isAuthenticated$ | async"
-        class="btn btn-primary me-3"
+        mat-raised-button color="primary"
         (click)= handleLogout()>
             Log Out
         </button>
@@ -42,13 +45,20 @@
 
 
 <div class="container pb-2" style="padding-top: 70px;">
-  <h1 class="text-center">Recipe Book Pro 2022</h1>
+  <h1 class="text-center">Master Chef</h1>
+  <div *ngIf="loaderService.isLoading | async">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
 </div>
 
 <div
 class="bg-image"
-style="background-image: url('https://d.newsweek.com/en/full/1999121/spread-vegetables-fruits-fried-foods.jpg?w=1600&h=1200&q=88&f=2f684e3bfca96aa46ff937d4f56f04cd');height: 100vh;"
-></div>
+style="background-image: url('https://d.newsweek.com/en/full/1999121/spread-vegetables-fruits-fried-foods.jpg?w=1600&h=1200&q=88&f=2f684e3bfca96aa46ff937d4f56f04cd');height: 100vh;">
+</div>
 
-<router-outlet></router-outlet>
+<div [hidden]="loaderService.isLoading | async">
+  <router-outlet></router-outlet>
+</div>
+
+
 

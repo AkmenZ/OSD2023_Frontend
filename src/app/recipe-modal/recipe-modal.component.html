@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="d-flex justify-content-end">
+        
+        <button mat-icon-button color="warn"><mat-icon>flag</mat-icon></button>
+    </div>
+</div>
+<div mat-dialog-content>
+    <div class="card">
+        <div class="col">
+            <img src="{{ data.recipe.image }}" class="card-img-top" />
+            <div class="text-center">
+                <p>Like this recipe to add it to your favorites list!</p>
+                <button class="mt-1" mat-raised-button color="primary"><mat-icon>thumb_up</mat-icon> Like</button>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            <h3 class="pb-1 ps-2" style="background-color: #643cb4; color: white">
+                <div class="row">
+                    <p class="col text-uppercase">{{ data.recipe.title }}</p>
+                    <p class="col text-uppercase text-end me-2">By {{data.recipe.authorName}}</p>
+                </div>
+            </h3>
+            <div class="ps-2" style="background-color: rgb(168, 143, 218, 0.2);">
+                <h5>Diet Type:</h5>
+                <p class="card-text">{{ data.recipe.diet }}</p>
+                <h5>Ingredients:</h5>
+                <ul>
+                    <li *ngFor="let ingredient of data.recipe.ingredients">
+                        {{ ingredient["name"] }} ({{ ingredient["amount"] }})
+                    </li>
+                </ul>
+                <h5>Instructions:</h5>
+                <p class="card-text">{{ data.recipe.instructions }}</p>
+                <h5>Cooking Time:</h5>
+                <p class="card-text">{{ data.recipe.cookTime }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" mat-dialog-actions>
+    <div class="col" >
+        <button mat-raised-button color="link" mat-dialog-close>Close</button>
+    </div>
+    <div class="col text-end" *ngIf="user$ | async as user">
+        <button (click)="updateRecipe(data.recipe._id, data.recipe)" *ngIf="user.sub === data.recipe.authorId"
+            mat-raised-button color="primary" mat-dialog-close>Edit Recipe</button>
+
+        <button (click)="deleteRecipe()" *ngIf="user.sub === data.recipe.authorId || isAdmin"
+            mat-raised-button color="warn" mat-dialog-close>Delete Recipe</button>
+    </div>
+    
+</div>
+

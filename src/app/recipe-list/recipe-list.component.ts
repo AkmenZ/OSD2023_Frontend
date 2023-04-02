@@ -1,8 +1,12 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AuthService } from '@auth0/auth0-angular';
 import { Recipe } from 'src/interfaces/recipe';
+import { AdminService } from 'src/services/admin.service';
 import { RecipeService } from 'src/services/recipe.service';
+import { RecipeDetailsComponent } from '../recipe-details/recipe-details.component';
+import { RecipeModalComponent } from '../recipe-modal/recipe-modal.component';
 
 @Component({
   selector: 'app-recipe-list',
@@ -10,6 +14,8 @@ import { RecipeService } from 'src/services/recipe.service';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent implements OnInit {
+  @Input() recipe!: Recipe;
+  @Input() isAdmin!: boolean;
   recipeList: Recipe[] = [];
   message: string = "";
   selectedValue: string = "";
@@ -18,7 +24,8 @@ export class RecipeListComponent implements OnInit {
   isAuthenticated$ = this.auth.isAuthenticated$;
   diet: string = '';
 
-  constructor(private recipeService: RecipeService, public auth: AuthService) { }
+  constructor(private recipeService: RecipeService, public auth: AuthService, 
+              public dialog: MatDialog, private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.recipeService.getRecipes(this.diet).subscribe({
@@ -26,6 +33,9 @@ export class RecipeListComponent implements OnInit {
       complete: () => console.log('Recipe Service Finished!'),
       error: (message) => this.message = message
     });
+
+    //get the boolean value from admin service
+    this.isAdmin = this.adminService.getIsAdmin();
   }
 
   clicked (recipe: Recipe): void {
@@ -43,8 +53,11 @@ export class RecipeListComponent implements OnInit {
 
   //add new recipe
   addRecipe(newRecipe: Recipe): void {
-    console.log('adding new book ' + JSON.stringify(newRecipe));
-    this.recipeService.addRecipe({ ...newRecipe })
+    const formData = new FormData();
+    formData.append('recipe', JSON.stringify(newRecipe));
+
+    console.log('adding new recipe ' + JSON.stringify(newRecipe));
+    this.recipeService.addRecipe(newRecipe)
       .subscribe({
         next: recipe => {
           console.log(JSON.stringify(recipe) + ' has been added');
@@ -117,6 +130,13 @@ export class RecipeListComponent implements OnInit {
       next: (value: Recipe[] )=> this.recipeList = value,
       complete: () => console.log('Filter applied'),
       error: (message) => this.message = message
+    });
+  }
+
+  openModal() {
+    //this.dialog.open(RecipeModalComponent, {data: {recipe: this.currentRecipe}});
+    const dialogRef = this.dialog.open(RecipeModalComponent, {
+      data: { recipe: this.currentRecipe, isAdmin: this.isAdmin }
     });
   }
   

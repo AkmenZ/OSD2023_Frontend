@@ -11,6 +11,8 @@ import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 //material imports
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressBar, MatProgressBarModule} from '@angular/material/progress-bar';
 //components
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
@@ -19,10 +21,15 @@ import { RecipeRowComponent } from './recipe-row/recipe-row.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RecipeModalComponent } from './recipe-modal/recipe-modal.component';
+import { InterceptorService } from './loader/interceptor.service';
+import { FlagListComponent } from './flag-list/flag-list.component';
 
 const material = [
   MatButtonModule,
   MatIconModule,
+  MatDialogModule,
+  MatProgressBarModule
 ]
 
 @NgModule({
@@ -34,7 +41,9 @@ const material = [
     RecipeRowComponent,
     RecipeComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    RecipeModalComponent,
+    FlagListComponent
   ],
   imports: [
     material,
@@ -42,7 +51,7 @@ const material = [
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     AuthModule.forRoot({...environment.auth0,
       httpInterceptor: {
@@ -52,6 +61,11 @@ const material = [
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthHttpInterceptor,
+    multi: true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptorService,
     multi: true,
   },],
   bootstrap: [AppComponent]

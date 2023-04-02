@@ -14,5 +14,13 @@
 }
 
 a:hover {
-    color: #0d6efd;
+    color: #000000;
+}
+
+.logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: flipInX;
+    animation-duration: 2s;
 }

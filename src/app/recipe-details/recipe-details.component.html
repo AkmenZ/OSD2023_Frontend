@@ -2,7 +2,10 @@
     <img src="{{ recipe.image }}" class="card-img-top" />
     <div class="card-body">
       <h3 class="pb-1 ps-2" style="background-color: grey; color: white">
-        {{ recipe.title }}
+        <div class="row">
+          <p class="col text-uppercase">{{ recipe.title }}</p>
+          <p class="col text-uppercase text-end me-2">By {{recipe.authorName}}</p>
+        </div>
       </h3>
       <div class="ps-2">
         <h5>Diet Type:</h5>

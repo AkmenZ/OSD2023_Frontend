@@ -1,17 +1,17 @@
 <div class="alignfull">
 
-    <app-recipe-form *ngIf="showRecipeForm" (newRecipeEvent)="addRecipe($any($event))"
+    <app-recipe-form *ngIf="showRecipeForm" 
     (recipeFormClose)="closeForm($event)" [recipe]="currentRecipe"></app-recipe-form>
 
-    <div *ngIf="!showRecipeForm" id="sticky" class="d-flex flex-row pt-2 pb-2" style="background-color: lightblue;">
-        <button (click)="openAddRecipe()" *ngIf="isAuthenticated$ | async" 
-        class="btn btn-primary me-3 ms-4">Add Recipe</button>
+    <div *ngIf="!showRecipeForm" id="sticky" class="d-flex flex-row pt-2 pb-2" style="background-color: rgb(168, 143, 218)">
+        <button class="ms-3" (click)="openAddRecipe()" *ngIf="isAuthenticated$ | async" 
+        mat-raised-button color="primary">Add Recipe</button>
 
-        <button (click)="openEditRecipe()" *ngIf="isAuthenticated$ | async" [disabled]="!currentRecipe"
-        class="btn btn-secondary me-3">Edit Recipe</button>
+        <!--<button (click)="openEditRecipe()" *ngIf="isAuthenticated$ | async" [disabled]="!currentRecipe"
+        mat-raised-button color="link">Edit Recipe</button>
 
         <button (click)="deleteRecipe()" *ngIf="isAuthenticated$ | async" [disabled]="!currentRecipe"
-        class="btn btn-danger me-3">Delete Recipe</button>
+        mat-raised-button color="warn">Delete Recipe</button>-->
 
         <select *ngIf="!showRecipeForm" class="col form-select ms-4 me-4 mt-1" [(ngModel)]="diet" (ngModelChange)="onDietChange()">
             <option value="" disabled selected>Filter By Diet Type</option>
@@ -21,15 +21,20 @@
         </select>
     </div>
     
-    <div class="row ms-2 me-2">
-        <div class="col-4" *ngIf="!showRecipeForm">
-            <app-recipe-row class="card mt-2" *ngFor="let r of recipeList" [recipe]="r" (click)='clicked(r)'
-            [class.bg-primary]="isSelected(r)" [class.text-white]="isSelected(r)"></app-recipe-row>
+    <div class="container pt-2">
+        <div class="row">
+            <div class="col" *ngFor="let recipe of recipeList" (click)="clicked(recipe); openModal()">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{recipe.image}}" style="height: 250px; object-fit: cover;" class="card-img-top img-fluid" alt="Food Image">
+                    <div class="card-body">
+                        <h3 class="card-title text-center" style="background-color: #643cb4; color: white;">{{recipe.title}}</h3>
+                        <p class="card-text">Likes {{recipe.likes}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    
-        <app-recipe-details id="sticky2" class="col-8 d-flex mt-2" *ngIf="currentRecipe" [recipe]="currentRecipe"></app-recipe-details>
     </div>
 
     <div id="alert" *ngIf="message" class="alert alert-warning" role="alert">{{message}}</div>
-    
+
 </div>

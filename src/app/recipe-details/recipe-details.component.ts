@@ -8,7 +8,7 @@ import { Recipe } from 'src/interfaces/recipe';
 })
 export class RecipeDetailsComponent implements OnInit {
   @Input() recipe!: Recipe;
-  currentBook : Recipe | undefined;
+  currentRecipe : Recipe | undefined;
 
   constructor() { }
 
