@@ -34,6 +34,26 @@ export class RecipeService {
     .pipe(retry(3), catchError(this.handleError));
   }
 
+  //get all my recipes
+  getMyRecipes(authorId?: string) : Observable<Recipe[]> {
+    this.dataUri = `${environment.apiUri}/recipes/api/recipes`;
+    if(authorId) {
+      this.dataUri += `?authorId=${authorId}`
+    }
+    return this.http.get<Recipe[]>(`${this.dataUri}`)
+    .pipe(retry(3), catchError(this.handleError));
+  }
+
+  //get all my favorite recipes
+  getMyFavoriteRecipes(authorId?: string) : Observable<Recipe[]> {
+    this.dataUri = `${environment.apiUri}/recipes/api/recipes`;
+    if(authorId) {
+      this.dataUri += `/likedby/${authorId}`
+    }
+    return this.http.get<Recipe[]>(`${this.dataUri}`)
+    .pipe(retry(3), catchError(this.handleError));
+  }
+
   //add recipe
   addRecipe(recipe: any) : Observable<any> {
     var formData = new FormData();
@@ -76,6 +96,13 @@ export class RecipeService {
     const url = `${this.dataUri}/${id}`;
     return this.http.delete(url)
     .pipe(catchError(this.handleError))
+  }
+
+  //get flagged recipes
+  getFlagged() : Observable<Recipe[]> {
+    this.dataUri = `${environment.apiUri}/recipes/api/recipes?isFlagged=true`;
+    return this.http.get<Recipe[]>(`${this.dataUri}`)
+    .pipe(retry(3), catchError(this.handleError));
   }
 
   //handle errors

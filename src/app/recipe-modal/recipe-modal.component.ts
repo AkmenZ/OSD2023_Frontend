@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AuthService } from '@auth0/auth0-angular';
@@ -16,6 +17,7 @@ export class RecipeModalComponent implements OnInit {
   currentRecipe : Recipe | undefined;
   message: string = "";
   selectedRecipeId: string = "";
+  flagClicked: boolean | undefined = false;
 
   isAuthenticated$ = this.auth.isAuthenticated$;
   user$ = this.auth.user$;
@@ -23,7 +25,7 @@ export class RecipeModalComponent implements OnInit {
     map((user) => JSON.stringify(user, null))
     );
   
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private recipeService: RecipeService, public auth: AuthService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private recipeService: RecipeService, public auth: AuthService, private http: HttpClient) {
     this.recipe = this.data.recipe;
     this.isAdmin = this.data.isAdmin;
   }
@@ -65,6 +67,32 @@ export class RecipeModalComponent implements OnInit {
   
       this.ngOnInit();
       this.currentRecipe=undefined;
+    }
+
+    //flag recipe
+    flagRecipe() {
+      const setTrue = {
+        isFlagged: true
+      }
+      this.http.put('http://localhost:3000/recipes/api/recipes/' + this.selectedRecipeId, setTrue).subscribe({
+        next: (response) => console.log(response),
+        error: (error) => console.log(error)
+      });
+    }
+
+    //like recipe
+    likeRecipe(userId: string) {
+      this.http.get('http://localhost:3000/recipes/api/recipes/' + this.selectedRecipeId).subscribe((recipe) => {
+        const likedBy = this.recipe.likedBy || [];
+        if (!likedBy.some((like) => like.likeAuthorId === userId)) {
+          likedBy.push({ likeAuthorId: userId });
+          const likes = (this.recipe.likes || 0) + 1; // Increment the number of likes by 1
+          this.http.put('http://localhost:3000/recipes/api/recipes/' + this.selectedRecipeId, { likedBy, likes }).subscribe({
+            next: (response) => console.log(response),
+            error: (error) => console.log(error)
+          });
+        }
+      });
     }
 
 }

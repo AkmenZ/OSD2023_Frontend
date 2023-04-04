@@ -16,7 +16,7 @@
           <a class="nav-link ms-2"  *ngIf="isAuthenticated$ | async" routerLink="/profile" routerLinkActive="active">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link ms-2"  *ngIf="isAdmin" routerLink="/profile" routerLinkActive="active">Flagged List</a>
+          <a class="nav-link ms-2"  *ngIf="isAdmin" routerLink="/flagged" routerLinkActive="active">Flagged List</a>
         </li>
       </ul>
     </div>
@@ -44,21 +44,20 @@
 </nav>
 
 
-<div class="container pb-2" style="padding-top: 70px;">
-  <h1 class="text-center">Master Chef</h1>
-  <div *ngIf="loaderService.isLoading | async">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<div class="bg-image">
+  <div class="bg-image__overlay"></div>
+  <div class="container pb-2" style="padding-top: 70px; position: relative; z-index: 1;">
+    <h1 class="text-center">Master Chef</h1>
+    <div *ngIf="loaderService.isLoading | async">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <div [hidden]="loaderService.isLoading | async">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
 
-<div
-class="bg-image"
-style="background-image: url('https://d.newsweek.com/en/full/1999121/spread-vegetables-fruits-fried-foods.jpg?w=1600&h=1200&q=88&f=2f684e3bfca96aa46ff937d4f56f04cd');height: 100vh;">
-</div>
 
-<div [hidden]="loaderService.isLoading | async">
-  <router-outlet></router-outlet>
-</div>
 
 
 

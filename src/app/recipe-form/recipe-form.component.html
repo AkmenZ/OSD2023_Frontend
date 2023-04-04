@@ -1,8 +1,8 @@
-<div class="container">
-    <h2>Enter Recipe Data</h2>
+<div class="container pt-2" style="background-color: white;">
+    <legend class="text-center">Enter Recipe Data</legend>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
 
-    <form [formGroup]="recipeForm" (ngSubmit)="submit()" class="form-group" class="container-md" enctype="multipart/form-data">
+    <form [formGroup]="recipeForm" (ngSubmit)="submit()" class="form-group" class="container-md pb-2" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title">Title</label>
             <input id="title" type="text" formControlName="title" class="form-control">
@@ -19,7 +19,7 @@
                 <option value="vegetarian">Vegetarian</option>
             </select>
         </div>
-        <div class="mb-3" formArrayName="ingredients" style="background-color: lightgrey;">
+        <div class="mb-3 p-2" formArrayName="ingredients" style="background-color: rgb(0, 0, 0, 0.1);">
             <legend>Ingredients</legend>
             <div *ngFor="let ingredient of ingredients.controls; let i = index">
 
@@ -42,7 +42,7 @@
             <label for="cookTime">Cooking Time</label>
             <input id="cookTime" type="text" formControlName="cookTime" class="form-control">
         </div>
-        <button mat-raised-button color="link" type="submit" [disabled]="!recipeForm.valid">Submit</button>
+        <button class="mb-2" mat-raised-button color="primary" type="submit" [disabled]="!recipeForm.valid">Submit</button>
 
         <div *ngIf="instructions?.invalid && instructions?.touched" class="alert alert-danger">
             Instructions are required and must be at least 5 letters

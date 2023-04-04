@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AuthService } from '@auth0/auth0-angular';
+import { map } from 'rxjs';
 import { Recipe } from 'src/interfaces/recipe';
 import { AdminService } from 'src/services/admin.service';
 import { RecipeService } from 'src/services/recipe.service';
@@ -23,6 +24,11 @@ export class RecipeListComponent implements OnInit {
   currentRecipe : Recipe | undefined;
   isAuthenticated$ = this.auth.isAuthenticated$;
   diet: string = '';
+
+  user$ = this.auth.user$;
+  code$ = this.user$.pipe(
+    map((user) => JSON.stringify(user, null))
+    );
 
   constructor(private recipeService: RecipeService, public auth: AuthService, 
               public dialog: MatDialog, private adminService: AdminService) {}
@@ -123,12 +129,31 @@ export class RecipeListComponent implements OnInit {
     }
   }
 
+  //diet change in select box
   onDietChange() {
     console.log('Selected diet:', this.diet);
     
     this.recipeService.getRecipes(this.diet).subscribe({
       next: (value: Recipe[] )=> this.recipeList = value,
       complete: () => console.log('Filter applied'),
+      error: (message) => this.message = message
+    });
+  }
+
+  //return users recipes
+  openMyRecipes(authorId: string) {
+    this.recipeService.getMyRecipes(authorId).subscribe({
+      next: (value: Recipe[] )=> this.recipeList = value,
+      complete: () => console.log('My Own Recipes!'),
+      error: (message) => this.message = message
+    });
+  }
+
+  //return users liked recipes
+  openMyFavoriteRecipes(authorId: string) {
+    this.recipeService.getMyFavoriteRecipes(authorId).subscribe({
+      next: (value: Recipe[] )=> this.recipeList = value,
+      complete: () => console.log('My Liked Recipes!'),
       error: (message) => this.message = message
     });
   }

@@ -1,7 +1,6 @@
 <div class="row">
     <div class="d-flex justify-content-end">
-        
-        <button mat-icon-button color="warn"><mat-icon>flag</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="flagRecipe(); flagClicked = true" [disabled]="data.recipe.isFlagged || flagClicked"><mat-icon>flag</mat-icon></button>
     </div>
 </div>
 <div mat-dialog-content>
@@ -10,7 +9,8 @@
             <img src="{{ data.recipe.image }}" class="card-img-top" />
             <div class="text-center">
                 <p>Like this recipe to add it to your favorites list!</p>
-                <button class="mt-1" mat-raised-button color="primary"><mat-icon>thumb_up</mat-icon> Like</button>
+                <button class="mt-1" mat-raised-button color="primary" *ngIf="user$ | async as user" (click)="likeRecipe(user.sub)"
+                ><mat-icon>thumb_up</mat-icon> Like</button>
             </div>
         </div>
         

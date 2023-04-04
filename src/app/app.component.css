@@ -4,10 +4,6 @@
     z-index: 99;
 }
 
-.bg-image {
-    opacity: 0.4;
-}
-
 .active{
     font-weight: 600;
     background-color: white;
@@ -23,4 +19,22 @@ a:hover {
     left: 0;
     animation: flipInX;
     animation-duration: 2s;
+}
+
+.bg-image {
+    background-attachment: fixed;
+    height: 100vh;
+    background-image: url('https://d.newsweek.com/en/full/1999121/spread-vegetables-fruits-fried-foods.jpg?w=1600&h=1200&q=88&f=2f684e3bfca96aa46ff937d4f56f04cd');
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-image__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    background-color: white;
 }

@@ -1,1 +1,37 @@
-<p>flag-list works!</p>
+<div class="container pt-2">
+    <div *ngIf="!recipeList">
+        <h2>No Flagged Posts!</h2>
+    </div>
+    <div *ngIf="recipeList">
+    <div class="col card" *ngFor="let recipe of recipeList">
+        <div class="row">
+            <div class="col-5 mt-3">
+                <img src="{{recipe.image}}" style="height: 250px; object-fit: cover;" class="card-img-top img-fluid ms-2" alt="Food Image">
+            </div>
+            <div class="col-5">
+                <div class="card-body">
+                        <h3 class="card-title text-center" style="background-color: #643cb4; color: white;">{{recipe.title}}</h3>
+                        <p class="card-text">Posted By {{recipe.authorId}}</p>
+                        <h5>Ingredients:</h5>
+                    <ul>
+                        <li *ngFor="let ingredient of recipe.ingredients">
+                            {{ ingredient["name"] }} ({{ ingredient["amount"] }})
+                        </li>
+                    </ul>
+                    <h5>Instructions:</h5>
+                    <p class="card-text">{{ recipe.instructions }}</p>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="card-body">
+                    <h3 class="card-title text-center" style="background-color: #643cb4; color: white;">Actions</h3>
+                    <div class="text-center">
+                        <button class="mb-2" mat-raised-button color="primary" (click)="unflagRecipe(recipe._id)"><mat-icon>flag</mat-icon> Unflag</button>
+                        <button class="mb-2" mat-raised-button color="warn" (click)="deleteRecipe(recipe._id)"><mat-icon>delete</mat-icon> Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

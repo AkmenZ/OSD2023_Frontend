@@ -91,6 +91,7 @@ export class RecipeFormComponent implements OnInit {
       error: (error) => console.log(error)
     });
 
+    this.closeForm();
     this.ngOnInit();
   }
 
