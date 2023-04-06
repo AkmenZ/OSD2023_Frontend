@@ -61,14 +61,6 @@ export class RecipeService {
     var recipeData = JSON.stringify(recipe);
     formData.append("recipeData", recipeData);
 
-    // formData.append('title', recipe.title);
-    // formData.append('authorId', recipe.authorId);
-    // formData.append('cookTime', recipe.cookTime);
-    // formData.append('diet', recipe.diet);
-    // formData.append('ingredients', JSON.stringify(recipe.ingredients));
-    // formData.append('instructions', recipe.instructions);
-    // formData.append('image', recipe.image);
-
     console.log('image:', recipe.image);
 
     console.log('Data URI:', this.dataUri);

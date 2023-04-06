@@ -1,20 +1,21 @@
 <div class="row">
     <div class="d-flex justify-content-end">
-        <button mat-icon-button color="warn" (click)="flagRecipe(); flagClicked = true" [disabled]="data.recipe.isFlagged || flagClicked"><mat-icon>flag</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="flagRecipe(); flagClicked = true"
+            [disabled]="data.recipe.isFlagged || flagClicked"><mat-icon>flag</mat-icon></button>
     </div>
 </div>
 <div mat-dialog-content>
     <div class="card">
         <div class="col">
-            <img src="{{ data.recipe.image }}" class="card-img-top" />
+            <img src="{{ data.recipe.image }}" class="card-img-top" style="animation: pulse; animation-duration: 0.5s;" />
             <div class="text-center">
                 <p>Like this recipe to add it to your favorites list!</p>
-                <button class="mt-1" mat-raised-button color="primary" *ngIf="user$ | async as user" (click)="likeRecipe(user.sub)"
-                ><mat-icon>thumb_up</mat-icon> Like</button>
+                <button class="mt-1" mat-raised-button color="primary" *ngIf="user$ | async as user"
+                    (click)="likeRecipe(user.sub)"><mat-icon>thumb_up</mat-icon> Like</button>
             </div>
         </div>
-        
-        <div class="card-body">
+
+        <div class="card-body ms-2" style="border-left: 2px solid whitesmoke;">
             <h3 class="pb-1 ps-2" style="background-color: #643cb4; color: white">
                 <div class="row">
                     <p class="col text-uppercase">{{ data.recipe.title }}</p>
@@ -35,21 +36,36 @@
                 <h5>Cooking Time:</h5>
                 <p class="card-text">{{ data.recipe.cookTime }}</p>
             </div>
+            <div class="container" style="border-top: 2px solid #643cb4;">
+                <h5>Comments: {{commentList.length}}</h5>
+                <div>
+                    <div *ngFor="let comment of commentList">
+                        <div style="border-bottom: 1px solid whitesmoke;">
+                            <h5 class="d-flex text-uppercase" style="color: #643cb4; background-color: whitesmoke; width:fit-content; border-radius: 2px;">{{comment.commentAuthorName}}:</h5>
+                            <p class="d-flex">{{comment.commentContent}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex pt-1" *ngIf="user$ | async as user">
+                    <textarea class="col-10" [(ngModel)]="newCommentContent" rows="4" cols="30" placeholder="Enter your comment"></textarea>
+                    <button class="col ms-1 mt-4 mb-4" mat-raised-button color="primary" (click)="addNewComment(user.sub, user.nickname)" style="width: 30%;"><mat-icon>comment</mat-icon></button>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
 
 <div class="row" mat-dialog-actions>
-    <div class="col" >
+    <div class="col">
         <button mat-raised-button color="link" mat-dialog-close>Close</button>
     </div>
     <div class="col text-end" *ngIf="user$ | async as user">
         <button (click)="updateRecipe(data.recipe._id, data.recipe)" *ngIf="user.sub === data.recipe.authorId"
             mat-raised-button color="primary" mat-dialog-close>Edit Recipe</button>
 
-        <button (click)="deleteRecipe()" *ngIf="user.sub === data.recipe.authorId || isAdmin"
-            mat-raised-button color="warn" mat-dialog-close>Delete Recipe</button>
+        <button (click)="deleteRecipe()" *ngIf="user.sub === data.recipe.authorId || isAdmin" mat-raised-button
+            color="warn" mat-dialog-close>Delete Recipe</button>
     </div>
-    
-</div>
 
+</div>
