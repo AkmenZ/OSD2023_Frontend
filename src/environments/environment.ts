@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUri : 'http://localhost:3000',
+  //apiUri : 'http://localhost:3000',
+  apiUri: 'https://osd2023backend.up.railway.app',
+  //jwtDecoderUri: 'https://localhost:4200',
+  jwtDecoderUri: 'https://localhost:4200',
   auth0:
   {
     domain: 'dev-slwtm6bdvggyj45g.us.auth0.com',

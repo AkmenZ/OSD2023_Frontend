@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output, } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@auth0/auth0-angular';
 import { catchError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Recipe } from 'src/interfaces/recipe';
 import { RecipeService } from 'src/services/recipe.service';
 
@@ -21,6 +22,7 @@ export class RecipeFormComponent implements OnInit {
   recipeForm: FormGroup;
   ingredients!: FormArray;
   selectedImage: File | null = null;
+  private url: string = `${environment.apiUri}/recipes/api/recipes`;
 
   constructor(public auth: AuthService, private fb: FormBuilder, private recipeService: RecipeService, private http:HttpClient) {}
 
@@ -86,7 +88,7 @@ export class RecipeFormComponent implements OnInit {
     formData.append('cookTime', this.recipeForm.get('cookTime').value);
     
 
-    this.http.post('http://localhost:3000/recipes/api/recipes', formData).subscribe({
+    this.http.post(this.url, formData).subscribe({
       next: (response) => console.log(response),
       error: (error) => console.log(error)
     });

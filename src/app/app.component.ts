@@ -5,6 +5,7 @@ import { AuthService, User } from '@auth0/auth0-angular';
 import { LoaderService } from './loader/loader.service';
 import jwt_decode from 'jwt-decode';
 import { AdminService } from 'src/services/admin.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit{
   isAuthenticated$ = this.auth.isAuthenticated$
   user$ = this.auth.user$;
   isAdmin = false;
+  private jwtDecoderUrl: string = `${environment.jwtDecoderUri}/roles`;
 
   constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService, 
               private router: Router, public loaderService: LoaderService, private adminService: AdminService) {}
@@ -31,13 +33,13 @@ export class AppComponent implements OnInit{
           const decodedToken: any = jwt_decode(token);
           console.log("User Token Decoded - ", decodedToken);
     
-          if (decodedToken['https://localhost:4200/roles'] && decodedToken['https://localhost:4200/roles'].includes('admin')) {
+          if (decodedToken[this.jwtDecoderUrl] && decodedToken[this.jwtDecoderUrl].includes('admin')) {
             console.log("User is admin");
             this.adminService.setIsAdmin(true);
             this.isAdmin = true;
           } else {
             console.log("User is not admin");
-            console.log('Decoded Token:', decodedToken['https://localhost:4200/roles']);
+            console.log('Decoded Token:', decodedToken[this.jwtDecoderUrl]);
             this.adminService.setIsAdmin(false);
           }
         });

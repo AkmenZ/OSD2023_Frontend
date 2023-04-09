@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Recipe } from 'src/interfaces/recipe';
 import { RecipeService } from 'src/services/recipe.service';
 
@@ -12,6 +13,7 @@ export class FlagListComponent implements OnInit {
   flag: true;
   recipeList: Recipe[];
   message: string = '';
+  private url: string = `${environment.apiUri}/recipes/api/recipes`;
 
   constructor(private recipeService: RecipeService, private http: HttpClient) {}
 
@@ -35,7 +37,7 @@ export class FlagListComponent implements OnInit {
     };
     this.http
       .put(
-        'http://localhost:3000/recipes/api/recipes/' + selectedRecipeId,
+        this.url + selectedRecipeId,
         setFalse
       )
       .subscribe({
@@ -49,7 +51,7 @@ export class FlagListComponent implements OnInit {
 
   deleteRecipe(selectedRecipeId: string) {
     this.http
-      .delete('http://localhost:3000/recipes/api/recipes/' + selectedRecipeId)
+      .delete(this.url + selectedRecipeId)
       .subscribe({
         next: (response) => console.log(response),
         error: (error) => console.log(error),

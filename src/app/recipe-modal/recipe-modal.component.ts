@@ -8,6 +8,7 @@ import { Comment } from 'src/interfaces/comment';
 import { CommentService } from 'src/services/comment.service';
 import { RecipeService } from 'src/services/recipe.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-recipe-modal',
@@ -21,6 +22,8 @@ export class RecipeModalComponent implements OnInit {
   message: string = '';
   selectedRecipeId: string = '';
   flagClicked: boolean | undefined = false;
+  private url: string = `${environment.apiUri}/recipes/api/recipes/`;
+
   commentList: Comment[] = [];
   commentForm: FormGroup;
 
@@ -31,6 +34,7 @@ export class RecipeModalComponent implements OnInit {
   userId: string;
   userName: string;
   newCommentContent: string;
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -61,13 +65,6 @@ export class RecipeModalComponent implements OnInit {
       complete: () => console.log('Comment Service Finished!'),
       error: (message) => (this.message = message),
     });
-
-    // this.commentForm = new FormGroup({
-    //   recipeId: new FormControl(''),
-    //   commentAuthorId: new FormControl(''),
-    //   commentAuthorName: new FormControl(''),
-    //   commentContent: new FormControl('')
-    // });
   }
 
   //update recipe
@@ -108,7 +105,7 @@ export class RecipeModalComponent implements OnInit {
     };
     this.http
       .put(
-        'http://localhost:3000/recipes/api/recipes/' + this.selectedRecipeId,
+        this.url + this.selectedRecipeId,
         setTrue
       )
       .subscribe({
@@ -120,7 +117,7 @@ export class RecipeModalComponent implements OnInit {
   //like recipe
   likeRecipe(userId: string) {
     this.http
-      .get('http://localhost:3000/recipes/api/recipes/' + this.selectedRecipeId)
+      .get(this.url + this.selectedRecipeId)
       .subscribe((recipe) => {
         const likedBy = this.recipe.likedBy || [];
         if (!likedBy.some((like) => like.likeAuthorId === userId)) {
@@ -128,7 +125,7 @@ export class RecipeModalComponent implements OnInit {
           const likes = (this.recipe.likes || 0) + 1; // Increment the number of likes by 1
           this.http
             .put(
-              'http://localhost:3000/recipes/api/recipes/' +
+              this.url +
                 this.selectedRecipeId,
               { likedBy, likes }
             )
@@ -141,10 +138,7 @@ export class RecipeModalComponent implements OnInit {
   }
 
   //add comment
-  addNewComment(
-    commentAuthorId: string,
-    commentAuthorName: string
-  ) {
+  addNewComment(commentAuthorId: string, commentAuthorName: string) {
     const newComment: Comment = {
       recipeId: this.selectedRecipeId,
       commentAuthorId: commentAuthorId,
@@ -159,14 +153,5 @@ export class RecipeModalComponent implements OnInit {
       complete: () => console.log('Add Comment Service Finished!'),
       error: (message) => (this.message = message),
     });
-
   }
-
-  // onAddComment() {
-  //   const commentAuthorId: string = 'some_author_id'; // Replace with the actual author id
-  //   const commentAuthorName: string = 'some_author_name'; // Replace with the actual author name
-
-  //   // Call the addNewComment method with the input values
-  //   this.addNewComment(commentAuthorId, commentAuthorName, this.newCommentContent);
-  // }
 }
