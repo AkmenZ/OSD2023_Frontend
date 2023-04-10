@@ -51,6 +51,7 @@ export class AppComponent implements OnInit{
   handleLogout() {
     this.auth.logout();
     localStorage.clear();
+    this.router.navigate(['/']);
   }
   handleLogin() {
     this.auth.loginWithRedirect({appState: { target: '/recipes',}});
