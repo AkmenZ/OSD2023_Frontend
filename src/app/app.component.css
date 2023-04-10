@@ -58,6 +58,6 @@ a:hover {
 
 @media (min-width: 768px) {
     #mynavbar {
-      margin-left: 100px; /* Add margin to the right */
+      margin-left: 100px;
     }
   }

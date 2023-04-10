@@ -60,12 +60,12 @@
     <div class="col">
         <button mat-raised-button color="link" mat-dialog-close>Close</button>
     </div>
-    <div class="col text-end" *ngIf="user$ | async as user">
-        <button (click)="updateRecipe(data.recipe._id, data.recipe)" *ngIf="user.sub === data.recipe.authorId"
-            mat-raised-button color="primary" mat-dialog-close>Edit Recipe</button>
+    <div class="col text-end" *ngIf="user$ | async as user" style="display: flex; flex-wrap: wrap;">
+        <button class="mb-1" (click)="updateRecipe(data.recipe._id, data.recipe)" *ngIf="user.sub === data.recipe.authorId"
+            mat-raised-button color="primary" style="flex: 1;" mat-dialog-close>Edit Recipe</button>
 
-        <button (click)="deleteRecipe()" *ngIf="user.sub === data.recipe.authorId || isAdmin" mat-raised-button
-            color="warn" mat-dialog-close>Delete Recipe</button>
+        <button class="mb-1" (click)="deleteRecipe()" *ngIf="user.sub === data.recipe.authorId || isAdmin" mat-raised-button
+            color="warn" style="flex: 1;" mat-dialog-close>Delete Recipe</button>
     </div>
 
 </div>

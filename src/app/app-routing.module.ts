@@ -11,6 +11,7 @@ const routes: Routes = [
 {path: 'recipes',component: RecipeListComponent},
 {path: 'flagged', component: FlagListComponent, canActivate: [AuthGuard]},
 {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+{ path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({
