@@ -17,6 +17,7 @@ a:hover {
     position: absolute;
     top: 0;
     left: 0;
+    width: 120px;
     animation: flipInX;
     animation-duration: 2s;
 }
@@ -38,3 +39,25 @@ a:hover {
     opacity: 0.7;
     background-color: white;
 }
+
+@media (max-width: 767px) {
+    .logo {
+      width: 65px;
+    }
+}
+
+@media (max-width: 768px) {
+    #authButtons {
+      order: 1;
+    }
+    
+    #mynavbar {
+      order: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    #mynavbar {
+      margin-left: 100px; /* Add margin to the right */
+    }
+  }

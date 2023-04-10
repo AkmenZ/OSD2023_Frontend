@@ -9,7 +9,7 @@
         <div class="col">
             <img src="{{ data.recipe.image }}" class="card-img-top" style="animation: pulse; animation-duration: 0.5s;" />
             <div class="text-center">
-                <p>Like this recipe to add it to your favorites list!</p>
+                <p class="mt-1">Like this recipe to add it to your favorites list!</p>
                 <button class="mt-1" mat-raised-button color="primary" *ngIf="user$ | async as user"
                     (click)="likeRecipe(user.sub)"><mat-icon>thumb_up</mat-icon> Like</button>
             </div>
@@ -18,7 +18,7 @@
         <div class="card-body ms-2" style="border-left: 2px solid whitesmoke;">
             <h3 class="pb-1 ps-2" style="background-color: #643cb4; color: white">
                 <div class="row">
-                    <p class="col text-uppercase">{{ data.recipe.title }}</p>
+                    <p class="col-sm-12 col-md-6 text-uppercase">{{ data.recipe.title }}</p>
                     <p class="col text-uppercase text-end me-2">By {{data.recipe.authorName}}</p>
                 </div>
             </h3>

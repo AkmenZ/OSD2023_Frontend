@@ -3,27 +3,30 @@
     <app-recipe-form *ngIf="showRecipeForm" (recipeFormClose)="closeForm($event)"
         [recipe]="currentRecipe"></app-recipe-form>
 
-    <div *ngIf="!showRecipeForm" id="sticky" class="d-flex flex-row pt-2 pb-2 justify-content-center"
+    <div *ngIf="!showRecipeForm" id="sticky" class="d-flex flex-row pt-2 pb-2 justify-content-center align-items-center flex-wrap"
         style="background-color: rgb(168, 143, 218)">
 
         <div class="d-inline-flex">
                 <button class="ms-3" (click)="openAddRecipe()" *ngIf="isAuthenticated$ | async" mat-raised-button
             color="primary">Add Recipe</button>
 
-        <select *ngIf="!showRecipeForm" class="col-4 form-select ms-4 me-4 mt-1" [(ngModel)]="diet"
-            (ngModelChange)="onDietChange()" style="width: 200px !important;">
+        <select *ngIf="!showRecipeForm" class="col-12 col-sm-4 form-select ms-4 me-4 mt-1" [(ngModel)]="diet"
+            (ngModelChange)="onDietChange()" style="width: 200px !important; height: 40px;">
             <option value="" disabled selected>Filter By Diet Type</option>
             <option value="any">All</option>
             <option value="vegan">Vegan</option>
             <option value="vegetarian">Vegetarian</option>
         </select>
 
-        <button class="me-3" *ngIf="user$ | async as user" (click)="openMyRecipes(user.sub)" mat-raised-button
-            color="accent">My Recipes</button>
+    </div>
 
-        <button class="me-3" *ngIf="user$ | async as user" (click)="openMyFavoriteRecipes(user.sub)" mat-raised-button
-            color="accent">My Favorites</button>
-            
+        <div class="d-inline-flex flex-wrap" style="display: flex; flex-wrap: wrap;">
+
+        <button class="me-3 mt-1" *ngIf="user$ | async as user" (click)="openMyRecipes(user.sub)" mat-raised-button
+            color="accent" style="flex: 1;">My Recipes</button>
+
+        <button class="me-3 mt-1" *ngIf="user$ | async as user" (click)="openMyFavoriteRecipes(user.sub)" mat-raised-button
+            color="accent" style="flex: 1;">My Favorites</button>
         </div>
         
     </div>
