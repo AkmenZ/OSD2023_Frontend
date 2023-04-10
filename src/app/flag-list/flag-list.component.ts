@@ -13,7 +13,7 @@ export class FlagListComponent implements OnInit {
   flag: true;
   recipeList: Recipe[];
   message: string = '';
-  private url: string = `${environment.apiUri}/recipes/api/recipes`;
+  private url: string = `${environment.apiUri}/recipes/api/recipes/`;
 
   constructor(private recipeService: RecipeService, private http: HttpClient) {}
 
