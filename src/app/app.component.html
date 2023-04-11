@@ -51,21 +51,21 @@
     <div *ngIf="loaderService.isLoading | async">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
-    <div [hidden]="loaderService.isLoading | async">
+    <div class="pb-5" [hidden]="loaderService.isLoading | async">
       <router-outlet></router-outlet>
     </div>
+    <footer class="bg-light text-center text-lg-start" style="position: fixed; bottom: 0; width: 100%; margin-top: 50px;">
+      <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgb(168, 143, 218);">
+        © 2023 Copyright:
+        <a class="text-dark" href="https://osd2023frontend.up.railway.app/">Master Chef</a>
+      </div>
+    </footer>
   </div>
+  
 </div>
 
-<footer class="bg-light text-center text-lg-start">
 
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgb(168, 143, 218);">
-    © 2023 Copyright:
-    <a class="text-dark" href="https://osd2023frontend.up.railway.app/">Master Chef</a>
-  </div>
-  <!-- Copyright -->
-</footer>
 
 
 
